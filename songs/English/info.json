@@ -1,4 +1,9 @@
 {
-    "title": "English songs",
-    "description" : "Songs for you"
+  "title": "English Songs",
+  "description": "A collection of English tracks.",
+  "songs": [
+    "Dancing With Your Ghost.mp3",
+    "Die With A Smile.mp3",
+    "Past Lives.mp3"
+  ]
 }
