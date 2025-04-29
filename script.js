@@ -19,34 +19,40 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder = folder;
-    let res = await fetch(`/${folder}/info.json`);
-    let data = await res.json();
-    songs = data.songs;
+    try {
+        let res = await fetch(`/${folder}/info.json`);
+        let data = await res.json();
+        songs = data.songs;
 
-    // Show all the songs in the playlist
-    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
-    songUL.innerHTML = ""
-    for (const song of songs) {
-        songUL.innerHTML += `<li><img class="invert" width="34" src="img/music.svg" alt="">
-            <div class="info">
-                <div>${song}</div>
-                <div>kaka</div>
-            </div>
-            <div class="playnow">
-                <span>Play Now</span>
-                <img class="invert" src="img/play.svg" alt="">
-            </div></li>`;
-    }
+        let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
+        songUL.innerHTML = "";
+        for (const song of songs) {
+            songUL.innerHTML += `<li><img class="invert" width="34" src="img/music.svg" alt="">
+                <div class="info">
+                    <div>${song}</div>
+                    <div>kaka</div>
+                </div>
+                <div class="playnow">
+                    <span>Play Now</span>
+                    <img class="invert" src="img/play.svg" alt="">
+                </div></li>`;
+        }
 
-    // Attach event listeners
-    Array.from(songUL.getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", () => {
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
+        // Click events
+        Array.from(songUL.getElementsByTagName("li")).forEach(e => {
+            e.addEventListener("click", () => {
+                playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
+            });
         });
-    });
 
-    return songs;
+        return songs;
+    } catch (err) {
+        console.error("Failed to load songs for folder:", folder, err);
+        songs = [];
+        return [];
+    }
 }
+
 
 
 
